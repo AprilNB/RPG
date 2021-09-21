@@ -27,43 +27,58 @@ namespace RPG
             //Write out to the screen about the enemy attack.
             Console.WriteLine(player.Name + " you have encountered a " + firstEnemy.Name + "!");
 
-            //While the first enemy is not dead, repeat the playable cycle.
-            while (!firstEnemy.IsDead)
+            //While the first enemy and player are not dead, repeat the playable cycle.
+            while (!firstEnemy.IsDead && !player.IsDead)
             {
                 //Write out to the screen your options.
-                Console.WriteLine("What would you like to do?\n\n1. Single Attack\n2. Three Strike Attack\n3. Defend\n4. Attempt To Run Away.");
+                Console.WriteLine("What would you like to do?\n\n1. Single Attack\n2. Three Strike Attack\n3. Defend\n4. Heal");
+
                 //store what action the player chose.
                 string playersAction = Console.ReadLine();
 
                 //Check what action the player took.
-                if (playersAction == "1")
+                switch (playersAction)
                 {
-                    //Write out that we choose 1.
-                    Console.WriteLine("You chose to Single Attack the " + firstEnemy.Name + "!");
+                    case "1":
+                        //Write out that we choose 1.
+                        Console.WriteLine("You chose to single attack the " + firstEnemy.Name + "!");
 
-                    //Apply the attack damage to the enemy.
-                    firstEnemy.GetsHit(random.Next(1, 15));
+                        //Apply the attack damage to the enemy.
+                        firstEnemy.GetsHit(random.Next(1, 15));
+
+                        break;
+                    case "2":
+                        //Write out that we choose 2.
+                        Console.WriteLine("You chose to three strike attack the " + firstEnemy.Name + "!");
+
+                        //Loop three times to perform our multi attack.
+                        for (int i = 0; i < 3; i++)
+                        {
+                            //Apply the attack damage to the enemy.
+                            firstEnemy.GetsHit(random.Next(1, 15));
+                        }
+
+                        break;
+                    case "3":
+                        //Write out that we choose 3.
+                        Console.WriteLine("You chose to defend!");
+
+                        break;
+                    case "4":
+
+                        //Write out that we choose 4.
+                        Console.WriteLine("You chose to Heal!");
+
+                        break;
+                    default:
+                        //Let the user know they chose something else.
+                        Console.WriteLine("You chose something else.");
+
+                        break;
                 }
-                else if (playersAction == "2")
-                {
-                    //Write out that we choose 2.
-                    Console.WriteLine("You chose to Three Strike Attack!");
-                }
-                else if (playersAction == "3")
-                {
-                    //Write out that we choose 3.
-                    Console.WriteLine("You chose to Defend!");
-                }
-                else if (playersAction == "4")
-                {
-                    //Write out that we choose 4.
-                    Console.WriteLine("You chose to Attempt To Run Away!");
-                }
-                else
-                {
-                    //Let the user know they chose something else.
-                    Console.WriteLine("You chose something else.");
-                }
+
+                //Have the enemy attack the player.
+                player.GetsHit(random.Next(1, 5));
             }
         }
     }
